@@ -38,7 +38,6 @@ com_crashlytics_export_strings.xml
 .metadata/
 /android/bin/
 /core/bin/
-/desktop/bin/
 /html/bin/
 /ios/bin/
 /ios-moe/bin/
@@ -79,7 +78,6 @@ com_crashlytics_export_strings.xml
 /dist/
 /android/dist/
 /core/dist/
-/desktop/dist/
 /html/dist/
 /ios/dist/
 /ios-moe/dist/
