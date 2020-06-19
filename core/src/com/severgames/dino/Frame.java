@@ -94,6 +94,7 @@ public class Frame extends ScreenAdapter {
             kaktus[0].draw(batch);
             //kaktus[1].draw(batch);
             meneger.drawFilter(batch,delta);
+            //7
             font.draw(batch,Gdx.graphics.getFramesPerSecond()+" fps",200,500);
             if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
