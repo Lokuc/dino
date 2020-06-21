@@ -1,6 +1,7 @@
 package com.severgames.dino;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,12 +41,12 @@ public class BackgroundManager {
                 600f    //back
         };
 
-        sprites[0]=new Sprite(new Texture("textrure/fon.png"));
-        sprites[1]=new Sprite(new Texture("textrure/filter.png"));
-        sprites[2]=new Sprite(new Texture("textrure/line.png"));
-        sprites[3]=new Sprite(new Texture("textrure/back.png"));
-        sprites[4]=new Sprite(new Texture("textrure/statuya.png"));
-        sprites[5]=new Sprite(new Texture("textrure/plane.png"));
+        sprites[0]=new Sprite(new Texture("texture/fon/fon.png"));
+        sprites[1]=new Sprite(new Texture("texture/fon/filter.png"));
+        sprites[2]=new Sprite(new Texture("texture/fon/line.png"));
+        sprites[3]=new Sprite(new Texture("texture/fon/back.png"));
+        sprites[4]=new Sprite(new Texture("texture/fon/statuya.png"));
+        sprites[5]=new Sprite(new Texture("texture/fon/plane.png"));
 
 
     }
@@ -69,7 +70,7 @@ public class BackgroundManager {
             }
             System.out.println(randNum);
             temp = 7 + r.nextInt(1);
-            Xpos[randNum] = MyGdxGame.W;
+            Xpos[randNum] = Gdx.graphics.getWidth();
             sprites[randNum].setX(Xpos[randNum]);
             timeGround = 0;
             isBackSpawn=true;
@@ -126,13 +127,13 @@ public class BackgroundManager {
 
     float resize(){
 
-        float w = MyGdxGame.W;
+        float w = Gdx.graphics.getWidth();
         float h = (w/sprites[0].getWidth()* sprites[0].getHeight());
         sprites[0].setSize(w,h);
-        sprites[0].setPosition(0,MyGdxGame.H-sprites[0].getHeight());
+        sprites[0].setPosition(0,Gdx.graphics.getHeight()-sprites[0].getHeight());
         Xpos[0]=sprites[0].getX();
 
-        w = MyGdxGame.W;
+        w = Gdx.graphics.getWidth();
         h = (w/sprites[2].getWidth()*sprites[2].getHeight());
         sprites[2].setSize(w,h);
         sprites[2].setPosition(0,0);
@@ -140,25 +141,25 @@ public class BackgroundManager {
 
         h= (w/sprites[1].getWidth()*sprites[1].getHeight());
         sprites[1].setSize(w,h);
-        sprites[1].setPosition(0,MyGdxGame.H-sprites[1].getHeight());
+        sprites[1].setPosition(0,Gdx.graphics.getHeight()-sprites[1].getHeight());
         Xpos[1]=sprites[1].getX();
 
-        h=MyGdxGame.H-sprites[2].getHeight();
+        h=Gdx.graphics.getHeight()-sprites[2].getHeight();
         w = (h/sprites[3].getHeight()*sprites[3].getWidth());
         sprites[3].setSize(w,h);
-        sprites[3].setPosition(MyGdxGame.W,sprites[2].getHeight()-MyGdxGame.H/60f);
+        sprites[3].setPosition(Gdx.graphics.getWidth(),sprites[2].getHeight()-Gdx.graphics.getHeight()/60f);
         Xpos[3]=sprites[3].getX();
 
-        h=MyGdxGame.H/2;
+        h=Gdx.graphics.getHeight()/2;
         w = (h/sprites[4].getHeight()*sprites[4].getWidth());
         sprites[4].setSize(w,h);
-        sprites[4].setPosition(MyGdxGame.W,sprites[2].getHeight()-MyGdxGame.H/60f);
+        sprites[4].setPosition(Gdx.graphics.getWidth(),sprites[2].getHeight()-Gdx.graphics.getHeight()/60f);
         Xpos[4]=sprites[4].getX();
 
-        h=MyGdxGame.H/1.5f;
+        h=Gdx.graphics.getHeight()/1.5f;
         w = (h/sprites[5].getHeight()*sprites[5].getWidth());
         sprites[5].setSize(w,h);
-        sprites[5].setPosition(MyGdxGame.W,sprites[2].getHeight()-MyGdxGame.H/50f);
+        sprites[5].setPosition(Gdx.graphics.getWidth(),sprites[2].getHeight()-Gdx.graphics.getHeight()/50f);
         Xpos[5]=sprites[5].getX();
 
 
@@ -172,6 +173,5 @@ public class BackgroundManager {
     void updTime(float delta){
         timeGround+=delta;
     }
-
 
 }

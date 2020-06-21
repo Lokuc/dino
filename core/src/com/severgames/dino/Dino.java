@@ -15,6 +15,7 @@ class Dino {
     private float speedFly=0;
     private boolean inGopnik = false;
     private float y=0;
+    private float x;
     private Sprite[] anim;
     private Sprite[] gAnim;
     private float timeAnim=0f;
@@ -26,14 +27,14 @@ class Dino {
 
     Dino(){
         gAnim= new Sprite[2];
-        gAnim[0]=new Sprite(new Texture("textrure/animGopnik/gopnik0.png"));
-        gAnim[1]=new Sprite(new Texture("textrure/animGopnik/gopnik1.png"));
+        gAnim[0]=new Sprite(new Texture("texture/person/animGopnik/gopnik0.png"));
+        gAnim[1]=new Sprite(new Texture("texture/person/animGopnik/gopnik1.png"));
         anim= new Sprite[7];
-        sprite = new Sprite(new Texture("textrure/animation/anim0.png"));
-        float w = MyGdxGame.H/5;
+        sprite = new Sprite(new Texture("texture/person/animation/anim0.png"));
+        float w = Gdx.graphics.getWidth()/5;
         float h = (w/sprite.getWidth()*sprite.getHeight());
         for(int i=0;i<anim.length;i++){
-            anim[i]=new Sprite(new Texture("textrure/animation/anim"+i+".png"));
+            anim[i]=new Sprite(new Texture("texture/person/animation/anim"+i+".png"));
             anim[i].setSize(w,h);
         }
         sprite.setSize(w,h);
@@ -43,43 +44,49 @@ class Dino {
         gAnim[1].setSize(w,h);
         fly= new Sprite[2];
         sprite.setSize(w,h);
-        fly[0]=new Sprite(new Texture("textrure/fly/up.png"));
-        fly[1]=new Sprite(new Texture("textrure/fly/down.png"));
+        fly[0]=new Sprite(new Texture("texture/person/fly/up.png"));
+        fly[1]=new Sprite(new Texture("texture/person/fly/down.png"));
         w = sprite.getWidth();
         h = (w/fly[0].getWidth()*fly[0].getHeight());
         fly[0].setSize(w,h);
         fly[1].setSize(w,h);
+        x=Gdx.graphics.getWidth()/11f;
     }
 
     void spawn(){
+        x=Gdx.graphics.getWidth()/11f;
         for (Sprite value : anim) {
-            value.setPosition(150, y);
+            value.setPosition(x, y);
         }
-        sprite.setPosition(150,y);
-        gAnim[0].setPosition(150,y);
-        gAnim[1].setPosition(150,y);
-        fly[0].setPosition(150,y);
-        fly[1].setPosition(150,y);
+        sprite.setPosition(x,y);
+        gAnim[0].setPosition(x,y);
+        gAnim[1].setPosition(x,y);
+        fly[0].setPosition(x,y);
+        fly[1].setPosition(x,y);
         Y= (int) sprite.getY();
         speedFly=0;
         inFly=false;
     }
 
 
-    void resize(float height) {
-        float w = MyGdxGame.H/5;
+    float resize(float height) {
+        float w = Gdx.graphics.getHeight()/5f;
         float h = (w/sprite.getWidth()*sprite.getHeight());
+        for(int i=0;i<anim.length;i++){
+            anim[i].setSize(w,h);
+        }
         sprite.setSize(w,h);
-        w = sprite.getWidth();
-        h = (w/gAnim[0].getWidth()*gAnim[0].getHeight());
+        h=Gdx.graphics.getHeight()/7f;
+        w = (w/gAnim[0].getWidth())*gAnim[0].getHeight();
         gAnim[0].setSize(w,h);
         gAnim[1].setSize(w,h);
-        w = sprite.getWidth();
+        w = anim[0].getWidth();
         h = (w/fly[0].getWidth()*fly[0].getHeight());
         fly[0].setSize(w,h);
         fly[1].setSize(w,h);
         y=height;
         spawn();
+        return gAnim[0].getHeight();
     }
 
     void update(float delta){
@@ -107,7 +114,7 @@ class Dino {
                 inFly=false;
             }
         }
-        if(timeAnim>=0.1f){
+        if(timeAnim>=0.07f){
             skinNum++;
             if(skinNum==anim.length){
                 skinNum=0;
@@ -151,8 +158,8 @@ class Dino {
         }
     }
 
-    void checkCol(Kaktus kaktus, Frame frame) {
-        if(kaktus.getRect().overlaps(getReckt())){
+    void checkCol(Rectangle enemy, Frame frame) {
+        if(enemy.overlaps(getReckt())){
             frame.dead();
         }
 

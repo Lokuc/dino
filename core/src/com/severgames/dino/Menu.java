@@ -25,8 +25,8 @@ public class Menu extends ScreenAdapter implements ClickListener {
     public void show() {
         batch = new SpriteBatch();
         camera=new OrthographicCamera();
-        camera.setToOrtho(false,MyGdxGame.W,MyGdxGame.H);
-        start= new Button("textrure/start.png");
+        camera.setToOrtho(false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        start= new Button("texture/UI/start.png");
         start.setSizeW(3);
         start.addClickListener(this,camera);
         start.setPosition(ClickListener.POSITION_HORIZONTAL.Center, ClickListener.POSITION_VERTICAL.Center);
