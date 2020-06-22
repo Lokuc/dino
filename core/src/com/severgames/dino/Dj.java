@@ -24,8 +24,12 @@ public class Dj {
         ids[1]=sounds[1].play(0.7f);
     }
 
+    void resumeFon(){
+        sounds[0].resume(ids[0]);
+    }
+
 
     void pause() {
-        sounds[0].pause();
+        sounds[0].pause(ids[0]);
     }
 }

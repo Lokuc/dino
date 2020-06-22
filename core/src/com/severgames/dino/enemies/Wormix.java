@@ -50,6 +50,18 @@ class Wormix {
 
         Rectangle getRect(){
             temp=sprite.getBoundingRectangle(); //TODO edit temp
+            temp.width=temp.width/6;
+            temp.height-=temp.height/6;
+            return temp;
+        }
+        Rectangle getGround(){
+            temp=sprite.getBoundingRectangle();
+            //temp.height-=temp.height/8;
+            //temp.width-=temp.width/5;
+            temp.x+=temp.width/5;
+            temp.width-=temp.width/5;
+            temp.y+=temp.height-temp.height/7;
+            temp.height=temp.height/10;
             return temp;
         }
 }

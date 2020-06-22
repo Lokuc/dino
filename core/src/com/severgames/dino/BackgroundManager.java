@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.severgames.dino.enemies.EnemyManager;
 
 import java.util.Random;
 
@@ -76,14 +77,14 @@ public class BackgroundManager {
             isBackSpawn=true;
         }
         if(randNum==3) {
-            Xpos[3] -= speeds[3] * delta;
+            Xpos[3] -= EnemyManager.speed * delta;
             sprites[3].setX(Xpos[3]);
             sprites[3].draw(batch);
             if(Xpos[3]<-sprites[3].getWidth()){
                 isBackSpawn=false;
             }
         }else if(randNum==4){
-            Xpos[4] -= speeds[3] * delta;
+            Xpos[4] -= EnemyManager.speed * delta;
             sprites[4].setX(Xpos[4]);
             sprites[4].draw(batch);
             if(Xpos[4]<-sprites[4].getWidth()){
@@ -96,7 +97,7 @@ public class BackgroundManager {
         if(Xpos[2]<-sprites[2].getWidth()){
             Xpos[2]=0;
         }
-        Xpos[2]-=speeds[2]*delta;
+        Xpos[2]-=EnemyManager.speed*delta;
         sprites[2].setX(Xpos[2]);
         sprites[2].draw(batch);
         sprites[2].setX(Xpos[2]+sprites[2].getWidth());
@@ -104,7 +105,7 @@ public class BackgroundManager {
     }
     void drawPlane(SpriteBatch batch,float delta){
         if(randNum==5){
-            Xpos[5] -= speeds[3] * delta;
+            Xpos[5] -= EnemyManager.speed * delta;
             sprites[5].setX(Xpos[5]);
             sprites[5].draw(batch);
             if(Xpos[5]<-sprites[5].getWidth()){

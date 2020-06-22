@@ -1,5 +1,6 @@
 package com.severgames.dino.enemies;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -7,7 +8,7 @@ import java.util.Random;
 
 public class EnemyManager implements Mother {
 
-    static float speed = 600f;
+    public static float speed = 600f;
     private Wormix wormix;
     private Wall wall;
     private int type;
@@ -38,15 +39,19 @@ public class EnemyManager implements Mother {
         }
     }
     public void draw(SpriteBatch batch){
-        if(type==0){
-            wormix.draw(batch);
-        }else if(type==1){
-            wall.draw(batch);
+        if(isSpawn) {
+            if (type == 0) {
+                wormix.draw(batch);
+            } else if (type == 1) {
+                wall.draw(batch);
+            }
         }
     }
     public void draw1(SpriteBatch batch){
-        if(type==1){
-            wall.draw1(batch);
+        if(isSpawn) {
+            if (type == 1) {
+                wall.draw1(batch);
+            }
         }
     }
     public Rectangle getRect(){
@@ -59,8 +64,8 @@ public class EnemyManager implements Mother {
     }
     public void spawn() {
         int count = 2;
-        //type=r.nextInt(count);
-        type=1;
+        type=r.nextInt(count);
+        //type=1;
         isSpawn=true;
         if(type==0){
             wormix.spawn();
@@ -76,5 +81,20 @@ public class EnemyManager implements Mother {
     public void imDead(String type) {
         isSpawn=false;
         time=0f;
+    }
+
+    public Rectangle getGround() {
+        if(isSpawn&&type==0){
+            return wormix.getGround();
+        }
+        return null;
+    }
+
+    public Color getGroundColor() {
+        return Color.BLUE;
+    }
+
+    public Color getColor() {
+        return Color.RED;
     }
 }

@@ -52,7 +52,7 @@ public class Frame extends ScreenAdapter {
                     enemy.spawn();
                     active=true;
                     meneger.reSpawn();
-                    dj.playFon();
+                    dj.resumeFon();
                 }
             }
         },camera);
@@ -87,8 +87,9 @@ public class Frame extends ScreenAdapter {
             font.draw(batch,Gdx.graphics.getFramesPerSecond()+" fps",200,500);
             if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                tmp(dino.getReckt());
-                tmp(enemy.getRect());
+                tmp(dino.getReckt(),dino.getColor());
+                tmp(enemy.getRect(),enemy.getColor());
+                tmp(enemy.getGround(),enemy.getGroundColor());
                 shapeRenderer.end();
             }
 
@@ -101,8 +102,11 @@ public class Frame extends ScreenAdapter {
 
     }
 
-    private void tmp(Rectangle r){
-        shapeRenderer.rect(r.x,r.y,r.width,r.height);
+    private void tmp(Rectangle r,Color c){
+        if(r!=null) {
+            shapeRenderer.setColor(c);
+            shapeRenderer.rect(r.x, r.y, r.width, r.height);
+        }
     }
 
 
@@ -110,8 +114,8 @@ public class Frame extends ScreenAdapter {
         meneger.updTime(delta);
         score+=delta*3;
 
-        dino.update(delta);
         enemy.update(delta);
+        dino.update(delta,enemy.getGround());
         if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             dino.checkCol(enemy.getRect(), this);
         }
@@ -119,7 +123,7 @@ public class Frame extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-        camera.setToOrtho(false,width,height);
+        camera.setToOrtho(false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.updateMatrices();

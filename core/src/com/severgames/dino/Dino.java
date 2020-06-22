@@ -2,6 +2,7 @@ package com.severgames.dino;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ class Dino {
     private int Y=0;
     private float speedFly=0;
     private boolean inGopnik = false;
+    private boolean onWorm=false;
     private float y=0;
     private float x;
     private Sprite[] anim;
@@ -31,25 +33,12 @@ class Dino {
         gAnim[1]=new Sprite(new Texture("texture/person/animGopnik/gopnik1.png"));
         anim= new Sprite[7];
         sprite = new Sprite(new Texture("texture/person/animation/anim0.png"));
-        float w = Gdx.graphics.getWidth()/5;
-        float h = (w/sprite.getWidth()*sprite.getHeight());
         for(int i=0;i<anim.length;i++){
             anim[i]=new Sprite(new Texture("texture/person/animation/anim"+i+".png"));
-            anim[i].setSize(w,h);
         }
-        sprite.setSize(w,h);
-        w = sprite.getWidth();
-        h = (w/gAnim[0].getWidth()*gAnim[0].getHeight());
-        gAnim[0].setSize(w,h);
-        gAnim[1].setSize(w,h);
         fly= new Sprite[2];
-        sprite.setSize(w,h);
         fly[0]=new Sprite(new Texture("texture/person/fly/up.png"));
         fly[1]=new Sprite(new Texture("texture/person/fly/down.png"));
-        w = sprite.getWidth();
-        h = (w/fly[0].getWidth()*fly[0].getHeight());
-        fly[0].setSize(w,h);
-        fly[1].setSize(w,h);
         x=Gdx.graphics.getWidth()/11f;
     }
 
@@ -66,18 +55,19 @@ class Dino {
         Y= (int) sprite.getY();
         speedFly=0;
         inFly=false;
+        onWorm=false;
     }
 
 
     float resize(float height) {
-        float w = Gdx.graphics.getHeight()/5f;
-        float h = (w/sprite.getWidth()*sprite.getHeight());
+        float h = Gdx.graphics.getHeight()/5f;
+        float w = ((h/sprite.getHeight())*sprite.getWidth());
         for(int i=0;i<anim.length;i++){
             anim[i].setSize(w,h);
         }
         sprite.setSize(w,h);
-        h=Gdx.graphics.getHeight()/7f;
-        w = (w/gAnim[0].getWidth())*gAnim[0].getHeight();
+        h=Gdx.graphics.getHeight()/6.5f;
+        w = (h/gAnim[0].getHeight())*gAnim[0].getWidth();
         gAnim[0].setSize(w,h);
         gAnim[1].setSize(w,h);
         w = anim[0].getWidth();
@@ -89,9 +79,9 @@ class Dino {
         return gAnim[0].getHeight();
     }
 
-    void update(float delta){
+    void update(float delta, Rectangle rect){
         timeAnim+=delta;
-        if(!inFly) {
+        if(!inFly&&!onWorm) {
             if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 inGopnik = true;
                 if(timeAnim>=0.05f){
@@ -101,18 +91,17 @@ class Dino {
             } else {
                 inGopnik = false;
             }
+        }else if(onWorm){
+            checkGround(rect);
         }
         if (!inGopnik&&!inFly&&(Gdx.input.isKeyJustPressed(Input.Keys.UP)||Gdx.input.isKeyJustPressed(Input.Keys.W))){
             inFly=true;
-            speedFly=18f;
+            speedFly=Gdx.graphics.getHeight()/37f;
         }
         if(inFly){
             speedFly-=delta*40;
             Y+=speedFly;
-            if(Y<y){
-                Y= (int) y;
-                inFly=false;
-            }
+            checkGround(rect);
         }
         if(timeAnim>=0.07f){
             skinNum++;
@@ -129,6 +118,35 @@ class Dino {
 
     }
 
+    Color getColor(){
+        return Color.GREEN;
+    }
+
+    private void checkGround(Rectangle rect) {
+        if(Y<y){
+            Y= (int) y;
+            inFly=false;
+        }else if(rect!=null){
+            if(getReckt().y>rect.y&&getReckt().y<rect.y+rect.height*2) {
+                if (getReckt().x + getReckt().width > rect.x && rect.x + rect.width > getReckt().x) {
+                    if (getReckt().y > rect.y && getReckt().y < rect.y + rect.height) {
+                        Y = (int) (rect.y + rect.height);
+                        onWorm=true;
+                        speedFly=0;
+                    }else{
+                        onWorm=false;
+                    }
+                }else{
+                    onWorm=false;
+                }
+            }else{
+                onWorm=false;
+            }
+        }else{
+            onWorm=false;
+        }
+    }
+
     void draw(SpriteBatch batch){
         if(inGopnik) {
             if(gSkinNum) {
@@ -137,12 +155,16 @@ class Dino {
                 gAnim[1].draw(batch);
             }
         }else if(inFly){
-            if(speedFly>0){
-                fly[0].draw(batch);
-            }else{
-                fly[1].draw(batch);
+            if(onWorm){
+                anim[skinNum].draw(batch);
+            }else {
+                if (speedFly > 0) {
+                    fly[0].draw(batch);
+                } else {
+                    fly[1].draw(batch);
+                }
             }
-        }else{
+        }else {
             anim[skinNum].draw(batch);
         }
     }
