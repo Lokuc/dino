@@ -13,16 +13,10 @@ public class Menu extends ScreenAdapter implements ClickListener {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Button start;
-    private MyGdxGame game;
     private BackgroundManager background;
 
 
-    Menu(MyGdxGame game){
-        this.game=game;
-    }
-
-    @Override
-    public void show() {
+    Menu(){
         batch = new SpriteBatch();
         camera=new OrthographicCamera();
         camera.setToOrtho(false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -30,8 +24,14 @@ public class Menu extends ScreenAdapter implements ClickListener {
         start.setSizeW(3);
         start.addClickListener(this,camera);
         start.setPosition(ClickListener.POSITION_HORIZONTAL.Center, ClickListener.POSITION_VERTICAL.Center);
-        background = new BackgroundManager();
-        background.load();
+    }
+
+    @Override
+    public void show() {
+        camera.setToOrtho(false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        start.setSizeW(3);
+        batch.setProjectionMatrix(camera.combined);
+        start.setPosition(ClickListener.POSITION_HORIZONTAL.Center, ClickListener.POSITION_VERTICAL.Center);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class Menu extends ScreenAdapter implements ClickListener {
     @Override
     public void click(String id) {
         if(start.id(id)){
-            game.setScreen(new Frame(background));
-            dispose();
+            MyGdxGame.myGdxGame.getScreen().dispose();
+            MyGdxGame.myGdxGame.setFrame();
         }
     }
 }

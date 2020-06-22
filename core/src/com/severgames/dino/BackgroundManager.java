@@ -69,7 +69,6 @@ public class BackgroundManager {
             while(prevNum==randNum) {
                 randNum = 3 + r.nextInt(3);
             }
-            System.out.println(randNum);
             temp = 7 + r.nextInt(1);
             Xpos[randNum] = Gdx.graphics.getWidth();
             sprites[randNum].setX(Xpos[randNum]);

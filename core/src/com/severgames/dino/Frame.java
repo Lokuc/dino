@@ -22,16 +22,16 @@ public class Frame extends ScreenAdapter {
     private EnemyManager enemy;
     private boolean active=true;
     private Button over;
+    private Button menu;
     private float score=0f;
     private Dj dj = new Dj();
     private BitmapFont font;
-    private BackgroundManager meneger;
+    private BackgroundManager manager;
     private ShapeRenderer shapeRenderer;
 
 
-    @Override
-    public void show() {
-
+    Frame(BackgroundManager manager){
+        this.manager = manager;
         shapeRenderer=new ShapeRenderer();
 
 
@@ -41,6 +41,16 @@ public class Frame extends ScreenAdapter {
         dino = new Dino();
         dino.spawn();
         enemy= new EnemyManager();
+        menu=new Button("texture/UI/menu.png");
+        menu.setSizeW(4);
+        menu.setPosition(ClickListener.POSITION_HORIZONTAL.LeftBottom, ClickListener.POSITION_VERTICAL.DownBottom);
+        menu.addClickListener(new ClickListener() {
+            @Override
+            public void click(String id) {
+                MyGdxGame.myGdxGame.getScreen().dispose();
+                MyGdxGame.myGdxGame.setMenu();
+            }
+        },camera);
         over= new Button("texture/UI/gameover.png");
         over.setSizeW(4);
         over.setPosition(ClickListener.POSITION_HORIZONTAL.Center, ClickListener.POSITION_VERTICAL.Center);
@@ -51,18 +61,31 @@ public class Frame extends ScreenAdapter {
                     dino.spawn();
                     enemy.spawn();
                     active=true;
-                    meneger.reSpawn();
+                    manager.reSpawn();
                     dj.resumeFon();
                 }
             }
         },camera);
         dj.load();
-        dj.playFon();
 
         batch.setProjectionMatrix(camera.combined);
         font = new BitmapFont();
         font.setColor(Color.GREEN);
 
+    }
+
+
+    @Override
+    public void show() {
+        camera.setToOrtho(false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        dj.playFon();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.updateMatrices();
+        batch.setProjectionMatrix(camera.combined);
+        dino.spawn();
+        enemy.spawn();
+        active=true;
+        manager.reSpawn();
     }
 
     @Override
@@ -76,14 +99,14 @@ public class Frame extends ScreenAdapter {
 
             batch.begin();
 
-            meneger.drawFon(batch,delta);
-            meneger.drawBack(batch,delta);
-            meneger.drawPlane(batch,delta);
-            meneger.drawLine(batch,delta);
+            manager.drawFon(batch,delta);
+            manager.drawBack(batch,delta);
+            manager.drawPlane(batch,delta);
+            manager.drawLine(batch,delta);
             enemy.draw(batch);
             dino.draw(batch);
             enemy.draw1(batch);
-            meneger.drawFilter(batch,delta);
+            manager.drawFilter(batch,delta);
             font.draw(batch,Gdx.graphics.getFramesPerSecond()+" fps",200,500);
             if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -97,6 +120,7 @@ public class Frame extends ScreenAdapter {
         }else {
             batch.begin();
             over.draw(batch);
+            menu.draw(batch);
             batch.end();
         }
 
@@ -111,7 +135,7 @@ public class Frame extends ScreenAdapter {
 
 
     private void update(float delta){
-        meneger.updTime(delta);
+        manager.updTime(delta);
         score+=delta*3;
 
         enemy.update(delta);
@@ -128,7 +152,7 @@ public class Frame extends ScreenAdapter {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.updateMatrices();
         camera.update();
-        float tmp = meneger.resize();
+        float tmp = manager.resize();
 
         over.setSizeW(4);
         over.setPosition(ClickListener.POSITION_HORIZONTAL.Center, ClickListener.POSITION_VERTICAL.Center);
@@ -138,9 +162,6 @@ public class Frame extends ScreenAdapter {
 
     }
 
-    Frame(BackgroundManager meneger){
-        this.meneger = meneger;
-    }
 
 
     void dead() {

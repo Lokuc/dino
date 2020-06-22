@@ -14,16 +14,27 @@ public class loadScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private Sprite fon;
     private Sprite loading;
-    private MyGdxGame myGdxGame;
+    private Sprite load;
     private int temp;
+    private float count;
+    private SpriteLoad sl;
 
-    loadScreen(MyGdxGame myGdxGame) {
-        this.myGdxGame=myGdxGame;
+    loadScreen() {
         fon = new Sprite(new Texture("texture/UI/fon.png"));
+        load = new Sprite(new Texture("texture/UI/load.png"));
         loading = new Sprite(new Texture("texture/UI/loading.png"));
-        float w = Gdx.graphics.getWidth();
-        float h = (w/fon.getWidth()*fon.getHeight());
-        fon.setSize(w,h);
+        fon.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        float h = Gdx.graphics.getHeight()/3;
+        float w = h/loading.getHeight()*loading.getWidth();
+        loading.setSize(w,h);
+        load.setSize(w,h);
+        h=Gdx.graphics.getHeight()/2f-h/2f;
+        w=Gdx.graphics.getWidth()/2f-w/2f;
+        loading.setPosition(w,h);
+        load.setPosition(w,h);
+        loading.setSize(0,loading.getHeight());
+        sl = new SpriteLoad(this);
+        count=load.getWidth()/sl.getCount();
     }
 
 
@@ -33,11 +44,16 @@ public class loadScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0.0f,0.0f,0.0f,0.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        if(true){
-            myGdxGame.getScreen().dispose();
-            myGdxGame.setScreen(new Menu(myGdxGame));
+        if(!sl.getLoad()){
+            sl.loadi();
+        }else{
+            MyGdxGame.myGdxGame.getScreen().dispose();
+            MyGdxGame.myGdxGame.setMenu();
         }
+        batch.begin();
+        fon.draw(batch);
+        loading.draw(batch);
+        load.draw(batch);
         batch.end();
     }
 
@@ -46,6 +62,10 @@ public class loadScreen extends ScreenAdapter {
         camera=new OrthographicCamera();
         camera.setToOrtho(false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         batch=new SpriteBatch();
+        batch.setProjectionMatrix(camera.combined);
     }
 
+    void count() {
+        loading.setSize(loading.getWidth()+count,loading.getHeight());
+    }
 }
