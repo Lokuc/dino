@@ -7,7 +7,7 @@ import com.badlogic.gdx.Game;
 public class MyGdxGame extends Game {
 
 	public static MyGdxGame myGdxGame;
-	private static Frame frame;
+	 static Frame frame;
 	private static Menu menu;
 
 
@@ -20,9 +20,6 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create() {
 		myGdxGame=this;
-		BackgroundManager bg = new BackgroundManager();
-		bg.load();
-		frame=new Frame(bg);
 		menu = new Menu();
 		setScreen(new loadScreen());
 	}

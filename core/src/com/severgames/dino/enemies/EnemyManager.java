@@ -14,6 +14,7 @@ public class EnemyManager implements Mother {
     private int type;
     private boolean isSpawn;
     private float time;
+    private float timeA;
     private Random r;
 
     public EnemyManager(){
@@ -22,9 +23,11 @@ public class EnemyManager implements Mother {
         r=new Random();
         wall=new Wall(this);
         wormix = new Wormix(this);
+        timeA=4f;
     }
 
     public void update(float delta){
+        timeA-=delta/40;
         if(isSpawn) {
             if (type == 0) {
                 wormix.update(delta);
@@ -33,8 +36,8 @@ public class EnemyManager implements Mother {
             }
         }else{
             time+=delta;
-            if(time>=4f){
-                spawn();
+            if(time>=timeA){
+                spaw();
             }
         }
     }
@@ -63,6 +66,10 @@ public class EnemyManager implements Mother {
         return null;
     }
     public void spawn() {
+        timeA=4f;
+        spaw();
+    }
+    private void spaw(){
         int count = 2;
         type=r.nextInt(count);
         //type=1;

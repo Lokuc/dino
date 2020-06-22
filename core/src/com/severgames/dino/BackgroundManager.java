@@ -2,7 +2,6 @@ package com.severgames.dino;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.severgames.dino.enemies.EnemyManager;
@@ -42,12 +41,12 @@ public class BackgroundManager {
                 600f    //back
         };
 
-        sprites[0]=new Sprite(new Texture("texture/fon/fon.png"));
-        sprites[1]=new Sprite(new Texture("texture/fon/filter.png"));
-        sprites[2]=new Sprite(new Texture("texture/fon/line.png"));
-        sprites[3]=new Sprite(new Texture("texture/fon/back.png"));
-        sprites[4]=new Sprite(new Texture("texture/fon/statuya.png"));
-        sprites[5]=new Sprite(new Texture("texture/fon/plane.png"));
+        sprites[0]=SpriteLoad.getSprite(6);
+        sprites[1]=SpriteLoad.getSprite(5);
+        sprites[2]=SpriteLoad.getSprite(7);
+        sprites[3]=SpriteLoad.getSprite(4);
+        sprites[4]=SpriteLoad.getSprite(9);
+        sprites[5]=SpriteLoad.getSprite(8);
 
 
     }

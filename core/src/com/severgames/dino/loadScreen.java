@@ -47,6 +47,9 @@ public class loadScreen extends ScreenAdapter {
         if(!sl.getLoad()){
             sl.loadi();
         }else{
+            BackgroundManager bg = new BackgroundManager();
+            bg.load();
+            MyGdxGame.frame =new Frame(bg);
             MyGdxGame.myGdxGame.getScreen().dispose();
             MyGdxGame.myGdxGame.setMenu();
         }

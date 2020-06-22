@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.severgames.dino.SpriteLoad;
 
 class Wormix {
         private static Sprite sprite;
@@ -17,7 +18,7 @@ class Wormix {
 
         Wormix(Mother mother){
             this.mother=mother;
-            sprite=new Sprite(new Texture("texture/enemy/0.png"));
+            sprite= SpriteLoad.getSprite(0);
             isSpawn=false;
         }
 

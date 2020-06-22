@@ -54,7 +54,7 @@ public class Menu extends ScreenAdapter implements ClickListener {
     @Override
     public void click(String id) {
         if(start.id(id)){
-            MyGdxGame.myGdxGame.getScreen().dispose();
+            //MyGdxGame.myGdxGame.getScreen().dispose();
             MyGdxGame.myGdxGame.setFrame();
         }
     }

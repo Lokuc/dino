@@ -28,11 +28,13 @@ public class Frame extends ScreenAdapter {
     private BitmapFont font;
     private BackgroundManager manager;
     private ShapeRenderer shapeRenderer;
+    private MoneyManager money;
 
 
     Frame(BackgroundManager manager){
         this.manager = manager;
         shapeRenderer=new ShapeRenderer();
+        money=new MoneyManager();
 
 
         batch = new SpriteBatch();
@@ -47,7 +49,7 @@ public class Frame extends ScreenAdapter {
         menu.addClickListener(new ClickListener() {
             @Override
             public void click(String id) {
-                MyGdxGame.myGdxGame.getScreen().dispose();
+                //MyGdxGame.myGdxGame.getScreen().dispose();
                 MyGdxGame.myGdxGame.setMenu();
             }
         },camera);
@@ -106,6 +108,7 @@ public class Frame extends ScreenAdapter {
             enemy.draw(batch);
             dino.draw(batch);
             enemy.draw1(batch);
+            money.draw(batch);
             manager.drawFilter(batch,delta);
             font.draw(batch,Gdx.graphics.getFramesPerSecond()+" fps",200,500);
             if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
@@ -138,6 +141,7 @@ public class Frame extends ScreenAdapter {
         manager.updTime(delta);
         score+=delta*3;
 
+        money.update(delta);
         enemy.update(delta);
         dino.update(delta,enemy.getGround());
         if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -153,6 +157,7 @@ public class Frame extends ScreenAdapter {
         shapeRenderer.updateMatrices();
         camera.update();
         float tmp = manager.resize();
+        money.resize(tmp);
 
         over.setSizeW(4);
         over.setPosition(ClickListener.POSITION_HORIZONTAL.Center, ClickListener.POSITION_VERTICAL.Center);

@@ -29,16 +29,18 @@ class Dino {
 
     Dino(){
         gAnim= new Sprite[2];
-        gAnim[0]=new Sprite(new Texture("texture/person/animGopnik/gopnik0.png"));
-        gAnim[1]=new Sprite(new Texture("texture/person/animGopnik/gopnik1.png"));
+        gAnim[0]=SpriteLoad.getSprite(17);
+        gAnim[1]=SpriteLoad.getSprite(18);
         anim= new Sprite[7];
-        sprite = new Sprite(new Texture("texture/person/animation/anim0.png"));
+        sprite = SpriteLoad.getSprite(10);
+        int j=10;
         for(int i=0;i<anim.length;i++){
-            anim[i]=new Sprite(new Texture("texture/person/animation/anim"+i+".png"));
+            anim[i]=SpriteLoad.getSprite(j);
+            j++;
         }
         fly= new Sprite[2];
-        fly[0]=new Sprite(new Texture("texture/person/fly/up.png"));
-        fly[1]=new Sprite(new Texture("texture/person/fly/down.png"));
+        fly[0]=SpriteLoad.getSprite(19);
+        fly[1]=SpriteLoad.getSprite(20);
         x=Gdx.graphics.getWidth()/11f;
     }
 

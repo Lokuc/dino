@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.severgames.dino.SpriteLoad;
 
 class Wall {
     private static Sprite sprite;
@@ -18,9 +19,9 @@ class Wall {
 
     Wall(Mother mother){
         this.mother=mother;
-        sprite=new Sprite(new Texture("texture/enemy/3.png"));
-        sprite1=new Sprite(new Texture("texture/enemy/fonEnemy.png"));
-        sprite2=new Sprite(new Texture("texture/enemy/fonEnemy2.png"));
+        sprite= SpriteLoad.getSprite(1);
+        sprite1=SpriteLoad.getSprite(2);
+        sprite2=SpriteLoad.getSprite(3);
     }
     void spawn(){
         isSpawn=true;

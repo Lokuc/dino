@@ -10,13 +10,13 @@ public class SpriteLoad  {
             "texture/enemy/0.png",
             "texture/enemy/3.png",
             "texture/enemy/fonEnemy.png",
-            "texture/enemy/fonEnemy2.png",
+            "texture/enemy/fonEnemy2.png",  //3
             "texture/fon/back.png",
             "texture/fon/filter.png",
             "texture/fon/fon.png",
             "texture/fon/line.png",
             "texture/fon/plane.png",
-            "texture/fon/statuya.png",
+            "texture/fon/statuya.png",      //9
             "texture/person/animation/anim0.png",
             "texture/person/animation/anim1.png",
             "texture/person/animation/anim2.png",
@@ -24,10 +24,16 @@ public class SpriteLoad  {
             "texture/person/animation/anim4.png",
             "texture/person/animation/anim5.png",
             "texture/person/animation/anim6.png",
-            "texture/person/animGopnik/gopnik0.png",
+            "texture/person/animGopnik/gopnik0.png", //17
             "texture/person/animGopnik/gopnik1.png",
             "texture/person/fly/down.png",
-            "texture/person/fly/up.png"
+            "texture/person/fly/up.png",             //20
+            "texture/money/KEY0.png",
+            "texture/money/KEY1.png",
+            "texture/money/KEY2.png",
+            "texture/money/KEY3.png",
+            "texture/money/KEY4.png",
+            "texture/money/KEY5.png"            //26
 
     };
     private loadScreen ld;
@@ -36,6 +42,14 @@ public class SpriteLoad  {
     public SpriteLoad(loadScreen loadScreen){
         ld = loadScreen;
         sprites=new Sprite[path.length];
+    }
+
+    public static Sprite getSprite(int i){
+        return sprites[i];
+    }
+
+    public SpriteLoad(){
+
     }
 
     public void load(){
