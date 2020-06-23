@@ -33,7 +33,14 @@ public class SpriteLoad  {
             "texture/money/KEY2.png",
             "texture/money/KEY3.png",
             "texture/money/KEY4.png",
-            "texture/money/KEY5.png"            //26
+            "texture/money/KEY5.png",            //26
+            "texture/money/hide/hide0.png",
+            "texture/money/hide/hide1.png",
+            "texture/money/hide/hide2.png",
+            "texture/money/hide/hide3.png",
+            "texture/money/hide/hide4.png",
+            "texture/money/hide/hide5.png",
+            "texture/money/hide/hide6.png"      //33
 
     };
     private loadScreen ld;
@@ -66,6 +73,7 @@ public class SpriteLoad  {
 
     public void loadi(){
         sprites[iter]=new Sprite(new Texture(path[iter]));
+        sprites[iter].getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         ld.count();
         iter++;
     }

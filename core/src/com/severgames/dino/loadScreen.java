@@ -50,6 +50,7 @@ public class loadScreen extends ScreenAdapter {
             BackgroundManager bg = new BackgroundManager();
             bg.load();
             MyGdxGame.frame =new Frame(bg);
+            new Data();
             MyGdxGame.myGdxGame.getScreen().dispose();
             MyGdxGame.myGdxGame.setMenu();
         }

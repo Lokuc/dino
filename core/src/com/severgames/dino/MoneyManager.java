@@ -1,7 +1,8 @@
 package com.severgames.dino;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
 public class MoneyManager {
@@ -9,6 +10,7 @@ public class MoneyManager {
     private Random r;
     private int tmp;
     private float time=0;
+    private Rectangle[] rect;
 
     MoneyManager(){
         money=new Money[8];
@@ -16,6 +18,17 @@ public class MoneyManager {
             money[i]=new Money();
         }
         r= new Random();
+    }
+
+    void respawn(){
+        time=0;
+        for(Money m:money){
+            m.respawn();
+        }
+    }
+
+    Color getColor(){
+        return Color.YELLOW;
     }
 
     private void spawn(){
@@ -41,6 +54,18 @@ public class MoneyManager {
         for(Money m:money){
             m.update(delta);
         }
+    }
+
+    Rectangle[] getRect(){
+        rect = new Rectangle[tmp];
+        for (int i = 0; i < tmp; i++) {
+            rect[i]=money[i].getRect();
+        }
+        return rect;
+    }
+
+    void delete(int i){
+        money[i].delete();
     }
 
     void resize(float he){

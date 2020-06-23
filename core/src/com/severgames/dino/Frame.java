@@ -64,11 +64,13 @@ public class Frame extends ScreenAdapter {
                     enemy.spawn();
                     active=true;
                     manager.reSpawn();
+                    money.respawn();
                     dj.resumeFon();
                 }
             }
         },camera);
         dj.load();
+
 
         batch.setProjectionMatrix(camera.combined);
         font = new BitmapFont();
@@ -88,14 +90,20 @@ public class Frame extends ScreenAdapter {
         enemy.spawn();
         active=true;
         manager.reSpawn();
+        money.respawn();
+        dj.resumeFon();
     }
 
     @Override
     public void render(float delta) {
 
+        if(Gdx.input.isKeyPressed(Input.Keys.P)){
+            return;
+        }
         camera.update();
         Gdx.gl.glClearColor(0.1f,0.1f,0.1f,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         if(active) {
             update(delta);
 
@@ -113,9 +121,12 @@ public class Frame extends ScreenAdapter {
             font.draw(batch,Gdx.graphics.getFramesPerSecond()+" fps",200,500);
             if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                tmp(dino.getReckt(),dino.getColor());
-                tmp(enemy.getRect(),enemy.getColor());
-                tmp(enemy.getGround(),enemy.getGroundColor());
+                tmp(dino.getReckt(), dino.getColor());
+                tmp(enemy.getRect(), enemy.getColor());
+                tmp(enemy.getGround(), enemy.getGroundColor());
+                for(Rectangle re:money.getRect()){
+                    tmp(re,money.getColor());
+                }
                 shapeRenderer.end();
             }
 
@@ -144,6 +155,7 @@ public class Frame extends ScreenAdapter {
         money.update(delta);
         enemy.update(delta);
         dino.update(delta,enemy.getGround());
+        dino.checkMoney(money);
         if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             dino.checkCol(enemy.getRect(), this);
         }

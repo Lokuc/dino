@@ -3,7 +3,6 @@ package com.severgames.dino;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -25,9 +24,12 @@ class Dino {
     private boolean gSkinNum=false;
     private Rectangle temp=new Rectangle();
     private Sprite[] fly;
+    private int money;
 
 
     Dino(){
+        money=new Data().getMoney();
+        System.out.println(money);
         gAnim= new Sprite[2];
         gAnim[0]=SpriteLoad.getSprite(17);
         gAnim[1]=SpriteLoad.getSprite(18);
@@ -194,5 +196,19 @@ class Dino {
     }
     float getY(){
         return gAnim[0].getY();
+    }
+
+    void checkMoney(MoneyManager money) {
+        for(int i=0;i<money.getRect().length;i++){
+            if(money.getRect()[i]==null){
+                continue;
+            }
+            if(getReckt().overlaps(money.getRect()[i])){
+                money.delete(i);
+                this.money++;
+                System.out.println(this.money);
+                new Data().saveMoney(this.money);
+            }
+        }
     }
 }
