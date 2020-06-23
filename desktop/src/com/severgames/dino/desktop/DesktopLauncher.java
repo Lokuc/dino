@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.height=675;
 		config.vSyncEnabled=true;
 		config.title="SeverGames";
-		config.samples=3;
+		config.samples=16;
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

@@ -40,7 +40,8 @@ public class SpriteLoad  {
             "texture/money/hide/hide3.png",
             "texture/money/hide/hide4.png",
             "texture/money/hide/hide5.png",
-            "texture/money/hide/hide6.png"      //33
+            "texture/money/hide/hide6.png",      //33
+            "texture/enemy/2.png"
 
     };
     private loadScreen ld;
